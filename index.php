@@ -17,7 +17,10 @@
 
     <main>
         <section>
-                <input type="search">
+
+                <input type="text" id="data" placeholder="01-01-2000">
+                <button id="button1">Wyszukaj</button>
+                <button id="button2">Zresetuj</button>
                 <table>
                     <tr>
                         <td>
@@ -79,7 +82,9 @@
                                 <td>" . $row['kategoria'] . "</td>
                                 <td>" . $row['godzina_rozpoczecia'] . "</td>
                                 <td>" . $row['godzina_zakonczenia'] . "</td>
-                                <td>" . $row['data'] . "</td>
+                                <td>" . date('d-m-Y', strtotime($row['data'])) . "</td>
+
+
                               </tr>";
                     }
                 } else {
@@ -98,5 +103,6 @@
 
         <h2>Harmonogram firmy: x</h2>
     </footer>
+    <script src="script.js"> </script>
 </body>
 </html>

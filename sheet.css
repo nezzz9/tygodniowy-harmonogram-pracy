@@ -1,63 +1,112 @@
 *{
     box-sizing: border-box;
     font-family: Poppins;
-    color: white;
+
     margin: 0 ;
+}
+@media (max-width: 910px) {
+    table{font-size: 0.6em;}
+}
+@media (max-width: 560px) {
+    table{font-size: 0.4em;}
+    
 }
 
 body{
-    background-color: #C5C7BC;
+    background-color: #8FABD4;
+        color: white;
 }
 header,footer{
     width: 100%;
-    height: 120px;
-    background-color: #B6AE9F;
+    height: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #161A30;
     text-align: center;
-    padding-top: 40px;
+    padding-top: 20px;
 
 }
 header{
-    border-bottom: 10px solid #C5C7BC;
+    border-bottom: 10px solid #373650;
 }
 footer{
-    border-top: 10px solid #C5C7BC;
+    border-top: 10px solid #373650;
 }
 main{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #DEDED1;
+    background-color: #31304D;
     min-height: 720px;
     width: 100%;
 
 }
 section{
     display: flex;
-    justify-content: center;
     align-items: center;
+    flex-direction: column;
     width: 90%;
     min-height: 560px;
     padding: 10px 0 10px 0;
-    background-color: #b6ae9f7b;
+    background-color: #373650;
     border-radius: 8px;
 }
 table{
     width: 90%;
+
 }
 table,tr,td{
     border-collapse: collapse;
     text-align: center;
 }
 tr,td{
-    font-size: 1.2em; 
-    width: 50px;
+    font-size: 1em; 
 }
 tr{
-    background-color: #aaaca3;
+    color: black;
+    background-color: #f1f1ff;
 }
 tr:first-child{
-    background-color: #918a7e;
+    color: white;
+    background-color: #161A30;
 }
-td:first-child{
-    
+tr:nth-child(even){
+    background-color: #ffffff;
+}
+
+t1{
+    height: 2%;
+    color: black;
+    margin-bottom: 2%;
+}
+h3 {
+    margin-top: 2%;
+    font-size: 24px;
+}
+input[type="text"]{
+    background-color: #f1f1ff;
+    border-radius: 20px;
+    margin-top: 2%;
+    font-size: 20px;
+}
+#button1{
+    width: 10%;
+    margin-top: 1%;
+    border-radius: 20px;
+    background-color: #f1f1ff;
+    margin-bottom: 1%;
+    font-size: 16px;
+}
+#button2{
+    width: 10%;
+    border-radius: 20px;
+    background-color: #f1f1ff;
+    margin-bottom: 1%;
+    font-size: 16px;
+}
+#button1:hover{
+    background-color: #b8b8ff;
+}
+#button2:hover{
+    background-color: #b8b8ff;
 }
