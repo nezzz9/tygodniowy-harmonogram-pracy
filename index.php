@@ -22,6 +22,8 @@
             <div class="check" style="position:absolute; margin-left:85%">
                 Czy zapisywac date:
                 <input type="checkbox" id="autoRefresh" style="width:0.9em; height:0.9em;">
+                Czy wyswietlac opis:
+                <input type="checkbox" id="showDescription" style="width:0.9em; height:0.9em;">
             </div>
 
                 <input type="text" id="data" placeholder="01-01-2000">
@@ -74,10 +76,11 @@
                         u.imie,
                         u.nazwisko,
                         u.email,
-                        k.nazwa AS kategoria,
+                        z.tytul AS kategoria,
                         z.godzina_rozpoczecia,
                         z.godzina_zakonczenia,
-                        z.data
+                        z.data,
+                        z.opis
                     FROM zadania z
                     JOIN uzytkownicy u ON z.id_uzytkownika = u.id_uzytkownika
                     JOIN kategorie k ON z.id_kategorii = k.id_kategorii
@@ -94,7 +97,7 @@
                                 <td>" . $row['imie'] . "</td>
                                 <td>" . $row['nazwisko'] . "</td>
                                 <td>" . $row['email'] . "</td>
-                                <td>" . $row['kategoria'] . "</td>
+                                <td>" . $row['kategoria'] . "<br>Opis:<br>" . $row['opis'] ."</td>
                                 <td>" . $row['godzina_rozpoczecia'] . "</td>
                                 <td>" . $row['godzina_zakonczenia'] . "</td>
                                 <td>" . date('d-m-Y', strtotime($row['data'])) . "</td>

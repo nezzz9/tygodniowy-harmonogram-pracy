@@ -2,22 +2,24 @@ const input = document.querySelector('#data');
 const searchBtn = document.querySelector('#button1');
 const resetBtn = document.querySelector('#button2');
 const autoRefreshCheckbox = document.querySelector('#autoRefresh');
+const showDescriptionCheckbox = document.querySelector('#showDescription');
 const table = document.querySelector('table');
 const searchdownload = document.querySelector('#button3');
 
-//  Filtrowanie tabeli 
+const DATE_CELL_INDEX = 7;
+
+// 🔹 Filtrowanie po dacie
 function filterRows() {
     const selectedDate = input.value.trim();
     const rows = table.querySelectorAll('tr');
-
     rows.forEach((row, index) => {
         if (index === 0) return;
-        const rowDate = row.cells[6].textContent.trim();
+        const rowDate = row.cells[DATE_CELL_INDEX]?.textContent.trim();
         row.style.display = selectedDate === '' || rowDate === selectedDate ? '' : 'none';
     });
 }
 
-//  Zapis daty do localStorage tylko jeśli checkbox zaznaczony 
+// 🔹 Zapis / odczyt daty
 function saveDate() {
     const selectedDate = input.value.trim();
     if (autoRefreshCheckbox.checked && selectedDate !== '') {
@@ -27,7 +29,6 @@ function saveDate() {
     }
 }
 
-//  Wczytanie daty 
 function loadDate() {
     const savedDate = localStorage.getItem('selectedDate');
     if (savedDate && autoRefreshCheckbox.checked) {
@@ -36,65 +37,69 @@ function loadDate() {
     }
 }
 
-//  Reset 
+// 🔹 Reset
 function resetAll() {
     input.value = '';
     localStorage.removeItem('selectedDate');
     filterRows();
 }
 
-// Zapis i odczyt stanu checkboxa 
+// 🔹 Zapis / odczyt stanu checkboxów
 function saveCheckboxState() {
     localStorage.setItem('checkboxState', autoRefreshCheckbox.checked ? 'true' : 'false');
+    localStorage.setItem('showDescriptionState', showDescriptionCheckbox.checked ? 'true' : 'false');
 }
 
 function loadCheckboxState() {
-    const saved = localStorage.getItem('checkboxState');
-    autoRefreshCheckbox.checked = saved === 'true';
+    autoRefreshCheckbox.checked = localStorage.getItem('checkboxState') === 'true';
+    showDescriptionCheckbox.checked = localStorage.getItem('showDescriptionState') === 'true';
 }
 
-
-function attachRowClickEvents() {
-    const rows = table.querySelectorAll('tr');
-    rows.forEach((row, index) => {
-        if (index === 0) return;
-        const pdfButton = row.querySelector('.pdf-btn');
-        if (!pdfButton) return;
-
-        pdfButton.addEventListener('click', () => {
-            const data = {
-                imie: row.cells[0].textContent.trim(),
-                nazwisko: row.cells[1].textContent.trim(),
-                email: row.cells[2].textContent.trim(),
-                zadanie: row.cells[3].textContent.trim(),
-                rozpoczecie: row.cells[4].textContent.trim(),
-                zakonczenie: row.cells[5].textContent.trim(),
-                data: row.cells[6].textContent.trim(),
-            };
-            generatePDF(data);
-        });
+// 🔹 Przygotowanie opisów (owinięcie <span class="opis">)
+function prepareDescriptions() {
+    const zadanieCells = table.querySelectorAll('tr td:nth-child(5)');
+    zadanieCells.forEach(cell => {
+        if (cell.dataset.prepared) return; // unikamy ponownego owijania
+        const html = cell.innerHTML;
+        if (html.includes('Opis:')) {
+            const parts = html.split(/<br\s*\/?>Opis:<br\s*\/?>/i);
+            if (parts.length === 2) {
+                cell.innerHTML = `${parts[0]}<br><span class="opis">Opis:<br>${parts[1]}</span>`;
+                cell.dataset.prepared = 'true';
+            }
+        }
     });
 }
 
-// PDF
+// 🔹 Pokazywanie / ukrywanie opisów bez odświeżania
+function toggleDescriptions() {
+    const show = showDescriptionCheckbox.checked;
+    const opisElements = table.querySelectorAll('.opis');
+    opisElements.forEach(el => {
+        el.style.display = show ? 'inline' : 'none';
+    });
+    saveCheckboxState();
+}
+
+// 🔹 PDF generowanie
 function generatePDF(data) {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
     doc.setFont('Helvetica', 'bold');
     doc.setFontSize(18);
-    doc.text('Szczegoly zadania', 20, 20);
+    doc.text('Szczegóły zadania', 20, 20);
 
     doc.setFont('Helvetica', 'normal');
     doc.setFontSize(12);
 
     const info = [
-        `Imie: ${data.imie}`,
+        `Imię: ${data.imie}`,
         `Nazwisko: ${data.nazwisko}`,
         `E-mail: ${data.email}`,
         `Zadanie: ${data.zadanie}`,
-        `Czas rozpoczecia: ${data.rozpoczecie}`,
-        `Czas zakonczenia: ${data.zakonczenie}`,
+        `Czas rozpoczęcia: ${data.rozpoczecie}`,
+        `Czas zakończenia: ${data.zakonczenie}`,
         `Data: ${data.data}`,
     ];
 
@@ -103,14 +108,14 @@ function generatePDF(data) {
         doc.text(line, 20, y);
         y += 10;
     });
-    const fileName = `Zadanie - ${data.imie} - ${data.nazwisko} - ${data.data}.pdf`;
 
+    const fileName = `Zadanie - ${data.imie} - ${data.nazwisko} - ${data.data}.pdf`;
     doc.save(fileName);
 }
 
-//  Obsługa zdarzeń 
+// 🔹 Obsługa przycisków
 searchBtn.addEventListener('click', () => {
-    if(autoRefreshCheckbox.checked) saveDate();
+    if (autoRefreshCheckbox.checked) saveDate();
     filterRows();
 });
 
@@ -120,37 +125,44 @@ autoRefreshCheckbox.addEventListener('change', () => {
     saveCheckboxState();
     saveDate();
 });
+
+showDescriptionCheckbox.addEventListener('change', () => {
+    toggleDescriptions(); // teraz działa natychmiast
+});
+
 searchdownload.addEventListener('click', () => {
     saveDate();
     filterRows();
 
     const rows = table.querySelectorAll('tr');
     rows.forEach((row, index) => {
-        if (index === 0) return; // pomijamy nagłówek
-        if (row.style.display === 'none') return; // tylko widoczne wiersze
+        if (index === 0) return;
+        if (row.style.display === 'none') return;
 
         const data = {
-            imie: row.cells[0].textContent.trim(),
-            nazwisko: row.cells[1].textContent.trim(),
-            email: row.cells[2].textContent.trim(),
-            zadanie: row.cells[3].textContent.trim(),
-            rozpoczecie: row.cells[4].textContent.trim(),
-            zakonczenie: row.cells[5].textContent.trim(),
-            data: row.cells[6].textContent.trim(),
+            imie: row.cells[1].textContent.trim(),
+            nazwisko: row.cells[2].textContent.trim(),
+            email: row.cells[3].textContent.trim(),
+            zadanie: row.cells[4].textContent.trim(),
+            rozpoczecie: row.cells[5].textContent.trim(),
+            zakonczenie: row.cells[6].textContent.trim(),
+            data: row.cells[7].textContent.trim(),
         };
-
         generatePDF(data);
     });
 });
-//  Po załadowaniu strony 
+
+// 🔹 Inicjalizacja po załadowaniu strony
 window.addEventListener('load', () => {
     loadCheckboxState();
     loadDate();
-    attachRowClickEvents();
+    prepareDescriptions();
+    toggleDescriptions();
 });
+
 input.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
-        if(autoRefreshCheckbox.checked) saveDate();
+        if (autoRefreshCheckbox.checked) saveDate();
         filterRows();
-    }}
-);
+    }
+});
