@@ -81,11 +81,11 @@ function generatePDF(data) {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
-    doc.setFont('arial', 'bold');
+    doc.setFont('Helvetica', 'bold');
     doc.setFontSize(18);
     doc.text('Szczegoly zadania', 20, 20);
 
-    doc.setFont('arial', 'normal');
+    doc.setFont('Helvetica', 'normal');
     doc.setFontSize(12);
 
     const info = [

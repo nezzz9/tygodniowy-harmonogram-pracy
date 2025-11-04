@@ -12,7 +12,9 @@
     
 <body>
     <header>
-        <h1>Tygodniowy Harmonogram Pracy</h1>
+        <a href="index.php"><div class="polowa" id="active"><h1>Tygodniowy Harmonogram Pracy</h1></div></a>
+        <a href="dodawanie.php"><div class="polowa" ><h1>Dodawanie Zadan</h1></div></a>
+        
     </header>
 
     <main>
@@ -25,12 +27,14 @@
                 <input type="text" id="data" placeholder="01-01-2000">
                 <div id="container">
                     <button id="button1">Wyszukaj</button>
-                    <button id="button3">Pobierz Wyswietlone PDF</button>
+                    <button id="button3">Wyszukaj i Pobierz PDF</button>
                     <button id="button2">Zresetuj</button>
                 </div>
 
                 <table>
                     <tr>
+                        <td>
+                            ID Uzytkownika
                         <td>
                             Imie
                         </td>
@@ -66,6 +70,7 @@
                 
                 $sql = "
                     SELECT 
+                        u.id_uzytkownika,
                         u.imie,
                         u.nazwisko,
                         u.email,
@@ -85,6 +90,7 @@
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
                         echo "<tr>
+                                <td>" . $row['id_uzytkownika'] . "</td>
                                 <td>" . $row['imie'] . "</td>
                                 <td>" . $row['nazwisko'] . "</td>
                                 <td>" . $row['email'] . "</td>
