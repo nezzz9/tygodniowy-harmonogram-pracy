@@ -17,10 +17,18 @@
 
     <main>
         <section>
+            <div class="check" style="position:absolute; margin-left:85%">
+                Czy zapisywac date:
+                <input type="checkbox" id="autoRefresh" style="width:0.9em; height:0.9em;">
+            </div>
 
                 <input type="text" id="data" placeholder="01-01-2000">
-                <button id="button1">Wyszukaj</button>
-                <button id="button2">Zresetuj</button>
+                <div id="container">
+                    <button id="button1">Wyszukaj</button>
+                    <button id="button3">Pobierz Wyswietlone PDF</button>
+                    <button id="button2">Zresetuj</button>
+                </div>
+
                 <table>
                     <tr>
                         <td>
@@ -44,6 +52,7 @@
                         <td>
                             Data
                         </td>
+                        <td>PDF</td>
                     </tr>
                      <?php
                
@@ -83,6 +92,7 @@
                                 <td>" . $row['godzina_rozpoczecia'] . "</td>
                                 <td>" . $row['godzina_zakonczenia'] . "</td>
                                 <td>" . date('d-m-Y', strtotime($row['data'])) . "</td>
+                                <td><button class='pdf-btn'>PDF</button></td>
 
 
                               </tr>";
@@ -103,6 +113,8 @@
 
         <h2>Harmonogram firmy: x</h2>
     </footer>
-    <script src="script.js"> </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="script.js"></script>
+
 </body>
 </html>
