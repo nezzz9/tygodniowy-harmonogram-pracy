@@ -19,46 +19,102 @@
 
     <main>
         <section>
-            <div class="check" style="position:absolute; margin-left:85%">
+            <div id=inpcontainer>
+                <div class="check" style="position:absolute; margin-left:80%">
                 Czy zapisywac date:
                 <input type="checkbox" id="autoRefresh" style="width:0.9em; height:0.9em;">
+                <br>
                 Czy wyswietlac opis:
                 <input type="checkbox" id="showDescription" style="width:0.9em; height:0.9em;">
+                <br>
+                Zmien szerokosc pól w tabeli (px):
+                <input type="text" id="TRwidth" value="130" style="width:4em; height:1.2em;">
+                <button id="resetWidthBtn" style="    margin-left: 5px;
+                    padding: 2px 5px;
+                    font-size: 0.8em;
+                    background-color: #f1f1ff;
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;">
+                    Reset
+                </button>
+            </div>
             </div>
 
-                <input type="text" id="data" placeholder="01-01-2000">
-                <div id="container">
-                    <button id="button1">Wyszukaj</button>
-                    <button id="button3">Wyszukaj i Pobierz PDF</button>
-                    <button id="button2">Zresetuj</button>
-                </div>
 
-                <table>
+<input type="text" id="data" placeholder="01-01-2000">
+<div id="container">
+    <button id="button1">Wyszukaj</button>
+    <button id="button3">Wyszukaj i Pobierz PDF</button>
+    <button id="button2">Zresetuj</button>
+</div>
+
+
+
+<table>
                     <tr>
                         <td>
+                            <div style="margin-top: 10px;">
+                            <input type="checkbox" id="colCheckbox0" >
+                            <label for="colCheckbox0"></label>
+                        </div>
                             ID Uzytkownika
                         <td>
+                            <div style="margin-top: 10px;">
+                            <input type="checkbox" id="colCheckbox1" >
+                            <label for="colCheckbox1"></label>
+                        </div>
                             Imie
                         </td>
                         <td>
+                            <div style="margin-top: 10px;">
+                            <input type="checkbox" id="colCheckbox2" >
+                            <label for="colCheckbox2"></label>
+                        </div>
                             Nazwisko
                         </td>
                         <td>
+                            <div style="margin-top: 10px;">
+                            <input type="checkbox" id="colCheckbox3" >
+                            <label for="colCheckbox3"></label>
+                        </div>
                             E-Mail
                         </td>
                         <td>
+                            <div style="margin-top: 10px;">
+                            <input type="checkbox" id="colCheckbox4" >
+                            <label for="colCheckbox4"></label>
+                        </div>
                             Zadanie
                         </td>
                         <td>
+                            <div style="margin-top: 10px;">
+                            <input type="checkbox" id="colCheckbox5" >
+                            <label for="colCheckbox5"></label>
+                        </div>
                             Czas rozpoczecia
                         </td>
                         <td>
+                            <div style="margin-top: 10px;">
+                            <input type="checkbox" id="colCheckbox6" >
+                            <label for="colCheckbox6"></label>
+                        </div>
                             Czas zakonczenia
                         </td>
                         <td>
+                            <div style="margin-top: 10px;">
+                            <input type="checkbox" id="colCheckbox7" >
+                            <label for="colCheckbox7"></label>
+                        </div>
                             Data
                         </td>
-                        <td>PDF</td>
+                        <td>
+                            <div style="margin-top: 10px;">
+                            <input type="checkbox" id="colCheckbox8" >
+                            <label for="colCheckbox8"></label>
+                        </div>
+                        PDF
+                        </td>
                     </tr>
                      <?php
                

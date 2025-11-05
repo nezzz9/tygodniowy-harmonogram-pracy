@@ -12,6 +12,70 @@
         font-size: 0.9em;
     }
 }
+@media (max-width: 768px) {
+    header, footer {
+        height: 50px;
+        padding-top: 15px;
+    }
+    main {
+        min-height: 500px;
+    }
+    section {
+        width: 95%;
+        min-height: 400px;
+    }
+    #container {
+        width: 60%;
+    }
+    #button1, #button2, #button3 {
+        width: 25%;
+    }
+    .box {
+        width: 60%;
+    }
+}
+@media (max-width: 480px) {
+    header, footer {
+        height: 40px;
+        padding-top: 10px;
+    }
+    main {
+        min-height: 400px;
+    }
+    section {
+        width: 98%;
+        min-height: 300px;
+    }
+    table {
+        font-size: 0.3em;
+    }
+    #data {
+        width: 30%;
+        font-size: 16px;
+    }
+    #container {
+        width: 100%;
+        flex-direction: column;
+    }
+    #button1, #button2, #button3 {
+        width: 80%;
+        margin: 5px 0;
+    }
+    .box {
+        width: 90%;
+    }
+    .polowa {
+        float: none;
+        width: 100%;
+    }
+    .button, .btnselect {
+        width: 90%;
+    }
+    .btnsubmit {
+        width: 80%;
+        margin-left: 10%;
+    }
+}
 
 body{
     background-color: #31304D;
@@ -62,7 +126,8 @@ table,tr,td{
     text-align: center;
 }
 tr,td{
-    font-size: 1em; 
+    font-size: 0.9em; 
+    width: 130px;
 }
 tr{
     color: black;
@@ -143,15 +208,15 @@ h3 {
 .pdf-btn{
     border-radius: 5px;
     background-color: #f1f1ff;
-    font-size: 16px;
+    font-size: 13px;
 }
 .pdf-btn:hover{
     background-color: #b8b8ff;
     cursor: pointer;
 }
 input[type="checkbox"]{
-    width: 1.2em;
-    height: 1.2em;
+    width: 1em;
+    height: 1em;
     cursor: pointer;
 }
 .polowa{
@@ -177,7 +242,21 @@ a{
     padding: 10px 0 10px 0;
     background-color: #f9f9f9;
     border-radius: 8px;
-    }
+#resetWidthBtn {
+    margin-left: 5px;
+    padding: 2px 5px;
+    font-size: 0.8em;
+    background-color: #f1f1ff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#resetWidthBtn:hover {
+    background-color: #b8b8ff;
+}
+
+}
 #miniheader{
     width: 100%;
     height: 60px;
@@ -224,7 +303,20 @@ a{
     color: white;
     font-size: 1em;
 }
+#inpcontainer{
+    font-size: 0.9em;
+    position: absolute;
+    margin-top: 4%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+input[type="text"]{
 
+    padding-left: 10px;
+}
 
 
 
