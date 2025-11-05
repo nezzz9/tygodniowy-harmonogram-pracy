@@ -29,7 +29,7 @@
                 <br>
                 Zmien szerokosc pól w tabeli (px):
                 <input type="text" id="TRwidth" value="130" style="width:4em; height:1.2em;">
-                <button id="resetWidthBtn" style="    margin-left: 5px;
+                <button id="resetWidthBtn" style=" margin-left: 5px;
                     padding: 2px 5px;
                     font-size: 0.8em;
                     background-color: #f1f1ff;
@@ -42,12 +42,12 @@
             </div>
 
 
-<input type="text" id="data" placeholder="01-01-2000">
-<div id="container">
-    <button id="button1">Wyszukaj</button>
-    <button id="button3">Wyszukaj i Pobierz PDF</button>
-    <button id="button2">Zresetuj</button>
-</div>
+            <input type="date" id="data" value="<?php echo date('Y-m-d'); ?>">
+            <div id="container">
+                <button id="button1">Wyszukaj</button>
+                <button id="button3">Wyszukaj i Pobierz PDF</button>
+                <button id="button2">Zresetuj</button>
+            </div>
 
 
 

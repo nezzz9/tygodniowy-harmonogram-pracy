@@ -25,13 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $godzina_rozpoczecia = trim($_POST['godzina_rozpoczecia']);
     $godzina_zakonczenia = trim($_POST['godzina_zakonczenia']);
 
-    // Konwersja daty na format YYYY-MM-DD
-    $data_array = explode("-", $data);
-    if(count($data_array) === 3){
-        $data_sql = $data_array[2] . "-" . $data_array[1] . "-" . $data_array[0];
-    } else {
-        $message = "Niepoprawny format daty.";
-    }
+    $data_sql = $data; // Date input sends in YYYY-MM-DD format
 
     if (!$message) {
         $sql = "INSERT INTO zadania (id_uzytkownika, id_kategorii, tytul, opis, data, godzina_rozpoczecia, godzina_zakonczenia) 

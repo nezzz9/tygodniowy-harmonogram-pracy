@@ -22,7 +22,9 @@ function filterRows() {
     rows.forEach((row, index) => {
         if (index === 0) return;
         const rowDate = row.cells[DATE_CELL_INDEX]?.textContent.trim();
-        row.style.display = selectedDate === '' || rowDate === selectedDate ? '' : 'none';
+        // Convert selectedDate from YYYY-MM-DD to DD-MM-YYYY for comparison
+        const formattedSelectedDate = selectedDate ? selectedDate.split('-').reverse().join('-') : '';
+        row.style.display = formattedSelectedDate === '' || rowDate === formattedSelectedDate ? '' : 'none';
     });
 }
 
@@ -47,14 +49,18 @@ function loadDate() {
 // 🔹 Reset
 function resetAll() {
     input.value = '';
+    filterRows(); // Pokaż wszystkie wiersze
+    input.value = new Date().toISOString().split('T')[0]; // Ustaw wartość na dzisiejszą datę
     localStorage.removeItem('selectedDate');
-    filterRows();
 }
 
 // 🔹 Zapis / odczyt stanu checkboxów
 function saveCheckboxState() {
     localStorage.setItem('checkboxState', autoRefreshCheckbox.checked ? 'true' : 'false');
     localStorage.setItem('showDescriptionState', showDescriptionCheckbox.checked ? 'true' : 'false');
+    // Save column checkbox states
+    const colStates = colCheckboxes.map(cb => cb.checked);
+    localStorage.setItem('columnCheckboxStates', JSON.stringify(colStates));
 }
 
 // 🔹 Zmiana szerokości pól tabeli
@@ -88,6 +94,16 @@ function updateTableWidth() {
 function loadCheckboxState() {
     autoRefreshCheckbox.checked = localStorage.getItem('checkboxState') === 'true';
     showDescriptionCheckbox.checked = localStorage.getItem('showDescriptionState') === 'true';
+    // Load column checkbox states
+    const colStates = localStorage.getItem('columnCheckboxStates');
+    if (colStates) {
+        const states = JSON.parse(colStates);
+        colCheckboxes.forEach((cb, index) => {
+            if (states[index] !== undefined) {
+                cb.checked = states[index];
+            }
+        });
+    }
 }
 
 // 🔹 Przygotowanie opisów (owinięcie <span class="opis">)
@@ -170,6 +186,7 @@ trWidthInput.addEventListener('input', updateTableWidth);
 // Add event listeners for column checkboxes
 colCheckboxes.forEach((checkbox, index) => {
     checkbox.addEventListener('change', () => {
+        saveCheckboxState(); // Save state immediately when changed
         if (checkbox.checked) {
             updateTableWidth(); // Apply width to this column
         } else {
@@ -206,8 +223,9 @@ resetWidthBtn.addEventListener('click', () => {
         btn.style.fontSize = '';
     });
     trWidthInput.value = '130';
-    // Reset all checkboxes to checked
-    colCheckboxes.forEach(cb => cb.checked = true);
+    // Reset all checkboxes to unchecked
+    colCheckboxes.forEach(cb => cb.checked = false);
+    saveCheckboxState(); // Zapisz stan po zmianie
 });
 
 searchdownload.addEventListener('click', () => {
@@ -238,9 +256,10 @@ window.addEventListener('load', () => {
     loadDate();
     prepareDescriptions();
     toggleDescriptions();
+    updateTableWidth(); // Apply saved column widths on load
 
     // 🔹 Obsługa indywidualnych przycisków PDF
-    
+
     pdfBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             const row = btn.closest('tr');
