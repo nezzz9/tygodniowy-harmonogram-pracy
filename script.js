@@ -166,3 +166,4 @@ input.addEventListener('keydown', (event) => {
         filterRows();
     }
 });
+    
